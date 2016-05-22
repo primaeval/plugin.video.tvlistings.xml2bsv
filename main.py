@@ -265,71 +265,21 @@ def xml_channels():
     write_str = "# WARNING Make a copy of this file.\n# It will be overwritten on the next channel reload.\n\n[plugin.video.all]\n"
     f.write(write_str.encode("utf8"))
 
-    import xml.etree.ElementTree as ET
     path = plugin.get_setting('bsv_folder')
     bsv_f = xbmcvfs.File(os.path.join(path,"channels.bsv"))
     bsv_channels = bsv_f.read().splitlines()
     log2(bsv_channels)
-    #tree = ET.fromstring(xml)
-    #order = 0
     for channel in bsv_channels:
         (display_name,id,icon,order) = channel.split('|')
-        #id = channel.attrib['id']
-        #display_name = channel.find('display-name').text
-        #try:
-        #    icon = channel.find('icon').attrib['src']
-        #except:
-        #    icon = ''
         channels[id] = '|'.join((display_name,icon,order))
         write_str = "%s=\n" % (id)
         f.write(write_str.encode("utf8"))
-        #order = order + 1
         
     bsv_f = xbmcvfs.File(os.path.join(path,"programmes.bsv"))
     bsv_programmes = bsv_f.read().splitlines()
     for programme in bsv_programmes:
         (channel,total_seconds,title,sub_title,date,series,episode,categories,desc) = programme.split('|')
-        #start = programme.attrib['start']
-        #start = xml2utc(start)
-        #start = utc2local(start)
-        #channel = programme.attrib['channel']
-        #title = programme.find('title').text
-        #match = re.search(r'(.*?)"}.*?\(\?\)$',title) #BUG in webgrab
-        #if match:
-        #    title = match.group(1)
-        #try:
-        #    sub_title = programme.find('sub-title').text
-        #except:
-        #    sub_title = ''
-        #try:
-        #    date = programme.find('date').text
-        #except:
-        #    date = ''
-        #try:
-        #    desc = programme.find('desc').text
-        #except:
-        #    desc = ''
-        #try:
-        #    episode_num = programme.find('episode-num').text
-        #except:
-        #    episode_num = ''
-        #series = 0
-        #episode = 0
-        #match = re.search(r'(.*?)\.(.*?)[\./]',episode_num)
-        #if match:
-        #    try:
-        #        series = int(match.group(1)) + 1
-        #        episode = int(match.group(2)) + 1
-        #    except:
-        #        pass
-        #series = str(series)
-        #episode = str(episode)
-        #categories = ''
-        #for category in programme.findall('category'):
-        #    categories = ','.join((categories,category.text)).strip(',')
-        
         programmes = plugin.get_storage(channel)
-        #total_seconds = time.mktime(start.timetuple())
         programmes[float(total_seconds)] = '|'.join((title,sub_title,date,series,episode,categories,desc))
 
         
