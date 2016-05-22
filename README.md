@@ -1,6 +1,6 @@
-# plugin.video.tvlistings.xmltv
+# plugin.video.tvlistings.xml2bsv
 
-# TV Listings (xmltv)
+# TV Listings (xml2bsv)
 
 xml2bsv TV Listings with catchup playback via Meta4Kodi and live playback via addons.
 
